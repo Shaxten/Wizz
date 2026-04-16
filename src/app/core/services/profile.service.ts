@@ -6,6 +6,9 @@ export interface Profile {
   id: string;
   username: string;
   avatar_url: string | null;
+  gender: 'homme' | 'femme' | null;
+  games: string[];
+  lifestyle: string[];
   created_at: string;
 }
 
@@ -48,7 +51,7 @@ export class ProfileService {
     return { data, error: null };
   }
 
-  updateProfile(updates: { username?: string; avatar_url?: string }) {
+  updateProfile(updates: { username?: string; avatar_url?: string; gender?: string | null; games?: string[]; lifestyle?: string[] }) {
     const user = this.auth.user();
     if (!user) throw new Error('Not authenticated');
     return this.supabase.client

@@ -13,10 +13,16 @@ import { AuthService } from '../../../core/services/auth.service';
 export class ProfileEditComponent implements OnInit {
   profile = signal<Profile | null>(null);
   username = '';
+  gender: string | null = null;
+  games: string[] = [];
+  lifestyle: string[] = [];
+  newGame = '';
   loading = signal(true);
   saving = signal(false);
   message = signal('');
   error = signal('');
+
+  lifestyleOptions = ['Gym', 'Jeux vidéo', 'Artist'];
 
   constructor(
     private profileService: ProfileService,
@@ -28,6 +34,9 @@ export class ProfileEditComponent implements OnInit {
     if (data) {
       this.profile.set(data);
       this.username = data.username ?? '';
+      this.gender = data.gender ?? null;
+      this.games = data.games ?? [];
+      this.lifestyle = data.lifestyle ?? [];
     }
     this.loading.set(false);
   }
@@ -37,13 +46,38 @@ export class ProfileEditComponent implements OnInit {
     this.error.set('');
     this.message.set('');
 
-    const { error } = await this.profileService.updateProfile({ username: this.username });
+    const { error } = await this.profileService.updateProfile({
+      username: this.username,
+      gender: this.gender,
+      games: this.games,
+      lifestyle: this.lifestyle,
+    });
     this.saving.set(false);
 
     if (error) {
       this.error.set(error.message);
     } else {
       this.message.set('Profil mis à jour !');
+    }
+  }
+
+  addGame() {
+    const game = this.newGame.trim();
+    if (game && !this.games.includes(game)) {
+      this.games = [...this.games, game];
+    }
+    this.newGame = '';
+  }
+
+  removeGame(game: string) {
+    this.games = this.games.filter(g => g !== game);
+  }
+
+  toggleLifestyle(option: string) {
+    if (this.lifestyle.includes(option)) {
+      this.lifestyle = this.lifestyle.filter(l => l !== option);
+    } else {
+      this.lifestyle = [...this.lifestyle, option];
     }
   }
 

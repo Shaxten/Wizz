@@ -26,10 +26,62 @@
       </label>
     </div>
 
-    <!-- Username -->
     <form (ngSubmit)="saveProfile()" class="edit-form">
+      <!-- Username -->
       <label for="username">Nom d'utilisateur</label>
       <input id="username" type="text" [(ngModel)]="username" name="username" required />
+
+      <!-- Genre -->
+      <label>Genre</label>
+      <div class="radio-group">
+        <label class="radio-option">
+          <input type="radio" name="gender" value="homme" [(ngModel)]="gender" />
+          Homme
+        </label>
+        <label class="radio-option">
+          <input type="radio" name="gender" value="femme" [(ngModel)]="gender" />
+          Femme
+        </label>
+      </div>
+
+      <!-- Jeux vidéo -->
+      <label>Jeux vidéo que je joue</label>
+      <div class="tags-input">
+        <div class="tags">
+          @for (game of games; track game) {
+            <span class="tag">
+              {{ game }}
+              <button type="button" class="tag-remove" (click)="removeGame(game)">✕</button>
+            </span>
+          }
+        </div>
+        <div class="tag-add">
+          <input
+            type="text"
+            [(ngModel)]="newGame"
+            name="newGame"
+            placeholder="Ajouter un jeu..."
+            (keydown.enter)="$event.preventDefault(); addGame()"
+          />
+          <button type="button" class="btn-add" (click)="addGame()">+</button>
+        </div>
+      </div>
+
+      <!-- Mode de vie -->
+      <label>Mode de vie</label>
+      <div class="checkbox-group">
+        @for (option of lifestyleOptions; track option) {
+          <label class="checkbox-option" [class.selected]="lifestyle.includes(option)">
+            <input
+              type="checkbox"
+              [checked]="lifestyle.includes(option)"
+              (change)="toggleLifestyle(option)"
+            />
+            {{ option }}
+          </label>
+        }
+      </div>
+
       <button type="submit" class="btn-primary" [disabled]="saving()">
         {{ saving() ? 'Sauvegarde...' : 'Sauvegarder' }}
       </button>
