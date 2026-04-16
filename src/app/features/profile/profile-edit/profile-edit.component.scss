@@ -33,7 +33,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  color: #000;
+  color: var(--accent-text);
   font-size: 2.5rem;
   font-weight: 700;
 }
@@ -61,7 +61,7 @@
   margin-top: 0.5rem;
   padding: 0.7rem;
   background: var(--accent);
-  color: #000;
+  color: var(--accent-text);
   border: none;
   border-radius: 8px;
   font-size: 0.95rem;
@@ -168,7 +168,7 @@
   .btn-add {
     padding: 0.5rem 0.75rem;
     background: var(--accent);
-    color: #000;
+    color: var(--accent-text);
     border: none;
     border-radius: 8px;
     cursor: pointer;
