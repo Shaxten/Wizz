@@ -191,7 +191,11 @@ export class GroupDetailComponent implements OnInit {
   }
 
   async rsvpEvent(eventId: string, status: 'present' | 'absent' | 'maybe') {
-    await this.eventService.rsvp(eventId, status);
+    const { error } = await this.eventService.rsvp(eventId, status);
+    if (error) {
+      console.error('RSVP error:', error);
+      return;
+    }
     await this.loadEvents();
   }
 
@@ -202,12 +206,12 @@ export class GroupDetailComponent implements OnInit {
 
   getMyRsvp(event: GroupEvent): string | null {
     const userId = this.auth.user()?.id;
-    const rsvp = event.rsvps?.find(r => r.user_id === userId);
+    const rsvp = event.event_rsvps?.find(r => r.user_id === userId);
     return rsvp?.status ?? null;
   }
 
   getRsvpCount(event: GroupEvent, status: string): number {
-    return event.rsvps?.filter(r => r.status === status).length ?? 0;
+    return event.event_rsvps?.filter(r => r.status === status).length ?? 0;
   }
 
   // === JOIN ===

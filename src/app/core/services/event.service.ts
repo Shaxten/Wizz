@@ -11,7 +11,7 @@ export interface GroupEvent {
   event_date: string;
   created_at: string;
   profiles?: { username: string; avatar_url: string | null };
-  rsvps?: EventRsvp[];
+  event_rsvps?: EventRsvp[];
 }
 
 export interface EventRsvp {
