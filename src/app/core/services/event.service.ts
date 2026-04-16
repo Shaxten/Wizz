@@ -31,7 +31,7 @@ export class EventService {
   getGroupEvents(groupId: string) {
     return this.supabase.client
       .from('group_events')
-      .select('*, profiles(username, avatar_url), event_rsvps(event_id, user_id, status, profiles(username, avatar_url))')
+      .select('*, profiles!group_events_created_by_fkey(username, avatar_url), event_rsvps(event_id, user_id, status, profiles(username, avatar_url))')
       .eq('group_id', groupId)
       .order('event_date', { ascending: true });
   }
@@ -42,7 +42,7 @@ export class EventService {
     return this.supabase.client
       .from('group_events')
       .insert({ ...data, group_id: groupId, created_by: user.id })
-      .select('*, profiles(username, avatar_url)')
+      .select('*, profiles!group_events_created_by_fkey(username, avatar_url)')
       .single();
   }
 
