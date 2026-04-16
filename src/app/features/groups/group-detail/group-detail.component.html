@@ -74,6 +74,7 @@
           <div class="post-form">
             <textarea
               [(ngModel)]="newPostContent"
+              [ngModelOptions]="{standalone: true}"
               placeholder="Quoi de neuf ?"
               rows="4"
             ></textarea>
@@ -112,21 +113,22 @@
             <input
               type="text"
               [(ngModel)]="newEventTitle"
-              name="eventTitle"
+              [ngModelOptions]="{standalone: true}"
               placeholder="Titre de l'événement"
             />
             <textarea
               [(ngModel)]="newEventDescription"
-              name="eventDesc"
+              [ngModelOptions]="{standalone: true}"
               placeholder="Description (optionnel)"
               rows="2"
             ></textarea>
             <input
               type="datetime-local"
               [(ngModel)]="newEventDate"
-              name="eventDate"
+              [ngModelOptions]="{standalone: true}"
             />
             <button
+              type="button"
               class="btn-primary"
               (click)="createEvent()"
               [disabled]="!newEventTitle.trim() || !newEventDate || creatingEvent()"
