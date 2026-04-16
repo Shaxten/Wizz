@@ -1,29 +1,17 @@
 <div class="auth-container">
   <h1>Connexion</h1>
+  <p class="subtitle">Connecte-toi pour accéder à Groupit</p>
 
   @if (error()) {
     <div class="error-msg">{{ error() }}</div>
   }
 
-  <form (ngSubmit)="loginWithEmail()" class="auth-form">
-    <label for="email">Email</label>
-    <input id="email" type="email" [(ngModel)]="email" name="email" placeholder="email@exemple.com" required />
-
-    <label for="password">Mot de passe</label>
-    <input id="password" type="password" [(ngModel)]="password" name="password" placeholder="••••••••" required />
-
-    <button type="submit" class="btn-primary" [disabled]="loading()">
-      {{ loading() ? 'Connexion...' : 'Se connecter' }}
+  <div class="oauth-buttons">
+    <button class="btn-google" (click)="loginWithGoogle()">
+      Continuer avec Google
     </button>
-  </form>
-
-  <div class="divider"><span>ou</span></div>
-
-  <button class="btn-discord" (click)="loginWithDiscord()">
-    Continuer avec Discord
-  </button>
-
-  <p class="auth-link">
-    Pas encore de compte ? <a routerLink="/register">S'inscrire</a>
-  </p>
+    <button class="btn-discord" (click)="loginWithDiscord()">
+      Continuer avec Discord
+    </button>
+  </div>
 </div>

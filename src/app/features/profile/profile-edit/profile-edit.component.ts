@@ -13,13 +13,10 @@ import { AuthService } from '../../../core/services/auth.service';
 export class ProfileEditComponent implements OnInit {
   profile = signal<Profile | null>(null);
   username = '';
-  newPassword = '';
-  confirmPassword = '';
   loading = signal(true);
   saving = signal(false);
   message = signal('');
   error = signal('');
-  isEmailUser = signal(false);
 
   constructor(
     private profileService: ProfileService,
@@ -27,9 +24,6 @@ export class ProfileEditComponent implements OnInit {
   ) {}
 
   async ngOnInit() {
-    const user = this.auth.user();
-    this.isEmailUser.set(user?.app_metadata?.['provider'] === 'email');
-
     const { data } = await this.profileService.getMyProfile();
     if (data) {
       this.profile.set(data);
@@ -50,32 +44,6 @@ export class ProfileEditComponent implements OnInit {
       this.error.set(error.message);
     } else {
       this.message.set('Profil mis à jour !');
-    }
-  }
-
-  async changePassword() {
-    this.error.set('');
-    this.message.set('');
-
-    if (this.newPassword !== this.confirmPassword) {
-      this.error.set('Les mots de passe ne correspondent pas.');
-      return;
-    }
-    if (this.newPassword.length < 6) {
-      this.error.set('Le mot de passe doit contenir au moins 6 caractères.');
-      return;
-    }
-
-    this.saving.set(true);
-    const { error } = await this.auth.updatePassword(this.newPassword);
-    this.saving.set(false);
-
-    if (error) {
-      this.error.set(error.message);
-    } else {
-      this.message.set('Mot de passe mis à jour !');
-      this.newPassword = '';
-      this.confirmPassword = '';
     }
   }
 

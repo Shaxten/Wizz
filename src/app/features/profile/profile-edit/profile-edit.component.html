@@ -34,23 +34,5 @@
         {{ saving() ? 'Sauvegarde...' : 'Sauvegarder' }}
       </button>
     </form>
-
-    <!-- Password (email users only) -->
-    @if (isEmailUser()) {
-      <div class="password-section">
-        <h2>Changer le mot de passe</h2>
-        <form (ngSubmit)="changePassword()" class="edit-form">
-          <label for="newPassword">Nouveau mot de passe</label>
-          <input id="newPassword" type="password" [(ngModel)]="newPassword" name="newPassword" placeholder="Min. 6 caractères" />
-
-          <label for="confirmPassword">Confirmer</label>
-          <input id="confirmPassword" type="password" [(ngModel)]="confirmPassword" name="confirmPassword" placeholder="••••••••" />
-
-          <button type="submit" class="btn-primary" [disabled]="saving()">
-            Changer le mot de passe
-          </button>
-        </form>
-      </div>
-    }
   </div>
 }

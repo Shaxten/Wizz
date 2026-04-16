@@ -23,12 +23,11 @@ export class AuthService {
     });
   }
 
-  signUpWithEmail(email: string, password: string) {
-    return this.supabase.client.auth.signUp({ email, password });
-  }
-
-  signInWithEmail(email: string, password: string) {
-    return this.supabase.client.auth.signInWithPassword({ email, password });
+  signInWithGoogle() {
+    return this.supabase.client.auth.signInWithOAuth({
+      provider: 'google',
+      options: { redirectTo: window.location.origin + '/Wizz/feed' },
+    });
   }
 
   signInWithDiscord() {
@@ -40,9 +39,5 @@ export class AuthService {
 
   signOut() {
     return this.supabase.client.auth.signOut();
-  }
-
-  updatePassword(newPassword: string) {
-    return this.supabase.client.auth.updateUser({ password: newPassword });
   }
 }
