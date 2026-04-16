@@ -34,7 +34,7 @@ export class AuthService {
   signInWithDiscord() {
     return this.supabase.client.auth.signInWithOAuth({
       provider: 'discord',
-      options: { redirectTo: window.location.origin + '/feed' },
+      options: { redirectTo: window.location.origin + '/Wizz/feed' },
     });
   }
 
