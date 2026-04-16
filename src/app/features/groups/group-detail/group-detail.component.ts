@@ -161,18 +161,26 @@ export class GroupDetailComponent implements OnInit {
 
   // === CALENDAR ===
   async loadEvents() {
-    const { data } = await this.eventService.getGroupEvents(this.groupId);
+    const { data, error } = await this.eventService.getGroupEvents(this.groupId);
+    if (error) {
+      console.error('Load events error:', error);
+    }
     this.events.set(data ?? []);
   }
 
   async createEvent() {
     if (!this.newEventTitle.trim() || !this.newEventDate) return;
     this.creatingEvent.set(true);
-    const { data } = await this.eventService.createEvent(this.groupId, {
+    const { data, error } = await this.eventService.createEvent(this.groupId, {
       title: this.newEventTitle,
       description: this.newEventDescription,
       event_date: this.newEventDate,
     });
+    if (error) {
+      console.error('Create event error:', error);
+      this.creatingEvent.set(false);
+      return;
+    }
     if (data) {
       await this.loadEvents();
       this.newEventTitle = '';
