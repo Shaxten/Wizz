@@ -24,6 +24,7 @@ export class AuthService {
       this.currentUser.set(session?.user ?? null);
 
       if (event === 'SIGNED_IN' && session) {
+        this.ensureProfile(session.user);
         this.router.navigate(['/feed']);
       }
 
@@ -56,5 +57,15 @@ export class AuthService {
 
   signOut() {
     return this.supabase.client.auth.signOut();
+  }
+
+  private async ensureProfile(user: User) {
+    const meta = user.user_metadata;
+    const username = meta?.['full_name'] || meta?.['name'] || user.email?.split('@')[0] || 'user';
+    const avatar_url = meta?.['avatar_url'] || meta?.['picture'] || null;
+
+    await this.supabase.client
+      .from('profiles')
+      .upsert({ id: user.id, username, avatar_url }, { onConflict: 'id' });
   }
 }

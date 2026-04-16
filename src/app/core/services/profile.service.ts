@@ -21,13 +21,31 @@ export class ProfileService {
       .from('profiles')
       .select('*')
       .eq('id', userId)
-      .single();
+      .maybeSingle();
   }
 
   async getMyProfile() {
     const user = this.auth.user();
     if (!user) throw new Error('Not authenticated');
-    return this.getProfile(user.id);
+
+    const { data, error } = await this.getProfile(user.id);
+
+    // If profile doesn't exist, create it (fallback if DB trigger didn't fire)
+    if (error || !data) {
+      const meta = user.user_metadata;
+      const username = meta?.['full_name'] || meta?.['name'] || user.email?.split('@')[0] || 'user';
+      const avatar_url = meta?.['avatar_url'] || meta?.['picture'] || null;
+
+      const { data: newProfile } = await this.supabase.client
+        .from('profiles')
+        .upsert({ id: user.id, username, avatar_url })
+        .select()
+        .single();
+
+      return { data: newProfile, error: null };
+    }
+
+    return { data, error: null };
   }
 
   updateProfile(updates: { username?: string; avatar_url?: string }) {
