@@ -1,5 +1,5 @@
 .search-page {
-  h1 { color: #fff; margin-bottom: 1.5rem; }
+  h1 { color: var(--white); margin-bottom: 1.5rem; }
 }
 
 .search-bar {
@@ -11,18 +11,18 @@
     flex: 1;
     padding: 0.75rem;
     border-radius: 8px;
-    border: 1px solid #2a2a2a;
-    background: #111;
-    color: #fff;
+    border: 1px solid var(--border);
+    background: var(--bg-input);
+    color: var(--white);
     font-size: 0.95rem;
 
-    &::placeholder { color: #555; }
+    &::placeholder { color: var(--text-muted); }
   }
 }
 
 .btn-primary {
   padding: 0.6rem 1.2rem;
-  background: #3ecf8e;
+  background: var(--accent);
   color: #000;
   border: none;
   border-radius: 8px;
@@ -30,48 +30,48 @@
   font-size: 0.9rem;
   font-weight: 600;
 
-  &:hover { background: #35b87a; }
+  &:hover { background: var(--accent-hover); }
 }
 
 .tabs {
   display: flex;
   gap: 0;
   margin-bottom: 1.5rem;
-  border-bottom: 2px solid #1e1e1e;
+  border-bottom: 2px solid var(--border);
 
   button {
     padding: 0.6rem 1.5rem;
     background: transparent;
     border: none;
-    color: #666;
+    color: var(--text-secondary);
     cursor: pointer;
     font-size: 0.9rem;
     border-bottom: 2px solid transparent;
     margin-bottom: -2px;
 
     &.active {
-      color: #3ecf8e;
-      border-bottom-color: #3ecf8e;
+      color: var(--accent);
+      border-bottom-color: var(--accent);
     }
 
-    &:hover { color: #888; }
+    &:hover { color: var(--text-secondary); }
   }
 }
 
 .result-card {
   display: block;
-  background: #161616;
-  border: 1px solid #1e1e1e;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
   border-radius: 10px;
   padding: 1rem 1.25rem;
   margin-bottom: 0.75rem;
   text-decoration: none;
   transition: border-color 0.2s;
 
-  &:hover { border-color: #3ecf8e44; }
+  &:hover { border-color: rgba(62, 207, 142, 0.27); }
 
-  h3 { color: #fff; margin: 0 0 0.25rem; }
-  p { color: #666; margin: 0; font-size: 0.85rem; }
+  h3 { color: var(--white); margin: 0 0 0.25rem; }
+  p { color: var(--text-secondary); margin: 0; font-size: 0.85rem; }
 }
 
 .profile-result {
@@ -79,7 +79,7 @@
   align-items: center;
   gap: 0.75rem;
 
-  span { color: #fff; font-weight: 600; }
+  span { color: var(--white); font-weight: 600; }
 }
 
 .avatar {
@@ -93,7 +93,7 @@
   width: 36px;
   height: 36px;
   border-radius: 50%;
-  background: #3ecf8e;
+  background: var(--accent);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -104,12 +104,12 @@
 
 .badge-private {
   display: inline-block;
-  background: #f59e0b22;
-  color: #f59e0b;
+  background: var(--warning-bg);
+  color: var(--warning-text);
   padding: 0.15rem 0.5rem;
   border-radius: 12px;
   font-size: 0.7rem;
   margin-top: 0.5rem;
 }
 
-.muted { color: #555; text-align: center; padding: 2rem; }
+.muted { color: var(--text-muted); text-align: center; padding: 2rem; }

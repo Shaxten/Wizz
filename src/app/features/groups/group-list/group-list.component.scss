@@ -5,11 +5,11 @@
     align-items: center;
     margin-bottom: 1.5rem;
 
-    h1 { color: #fff; }
+    h1 { color: var(--white); }
   }
 
   .btn-create {
-    background: #3ecf8e;
+    background: var(--accent);
     color: #000;
     padding: 0.6rem 1.2rem;
     border-radius: 8px;
@@ -17,7 +17,7 @@
     font-size: 0.9rem;
     font-weight: 600;
 
-    &:hover { background: #35b87a; }
+    &:hover { background: var(--accent-hover); }
   }
 }
 
@@ -25,24 +25,24 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background: #161616;
-  border: 1px solid #1e1e1e;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
   border-radius: 10px;
   padding: 1.25rem;
   margin-bottom: 0.75rem;
   text-decoration: none;
   transition: border-color 0.2s;
 
-  &:hover { border-color: #3ecf8e44; }
+  &:hover { border-color: rgba(62, 207, 142, 0.27); }
 
   .group-info {
-    h3 { color: #fff; margin: 0 0 0.25rem; }
-    p { color: #666; margin: 0; font-size: 0.85rem; }
+    h3 { color: var(--white); margin: 0 0 0.25rem; }
+    p { color: var(--text-secondary); margin: 0; font-size: 0.85rem; }
   }
 
   .role-badge {
-    background: #3ecf8e22;
-    color: #3ecf8e;
+    background: var(--accent-bg);
+    color: var(--accent);
     padding: 0.25rem 0.75rem;
     border-radius: 20px;
     font-size: 0.8rem;
@@ -52,10 +52,10 @@
 
 .empty-state {
   text-align: center;
-  color: #666;
+  color: var(--text-secondary);
   padding: 3rem 0;
 
-  a { color: #3ecf8e; text-decoration: none; }
+  a { color: var(--accent); text-decoration: none; }
 }
 
-.loading { color: #666; text-align: center; padding: 2rem; }
+.loading { color: var(--text-secondary); text-align: center; padding: 2rem; }

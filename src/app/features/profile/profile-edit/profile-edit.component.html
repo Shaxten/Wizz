@@ -2,7 +2,7 @@
   <p class="loading">Chargement...</p>
 } @else {
   <div class="edit-container">
-    <h1>Mon Profil</h1>
+    <h1>{{ i18n.t('profile.title') }}</h1>
 
     @if (error()) {
       <div class="error-msg">{{ error() }}</div>
@@ -21,31 +21,31 @@
         </div>
       }
       <label class="btn-secondary upload-btn">
-        Changer la photo
+        {{ i18n.t('profile.changePhoto') }}
         <input type="file" accept="image/*" (change)="onAvatarSelected($event)" hidden />
       </label>
     </div>
 
     <form (ngSubmit)="saveProfile()" class="edit-form">
       <!-- Username -->
-      <label for="username">Nom d'utilisateur</label>
+      <label for="username">{{ i18n.t('profile.username') }}</label>
       <input id="username" type="text" [(ngModel)]="username" name="username" required />
 
       <!-- Genre -->
-      <label>Genre</label>
+      <label>{{ i18n.t('profile.gender') }}</label>
       <div class="radio-group">
         <label class="radio-option">
           <input type="radio" name="gender" value="homme" [(ngModel)]="gender" />
-          Homme
+          {{ i18n.t('profile.male') }}
         </label>
         <label class="radio-option">
           <input type="radio" name="gender" value="femme" [(ngModel)]="gender" />
-          Femme
+          {{ i18n.t('profile.female') }}
         </label>
       </div>
 
       <!-- Jeux vidéo -->
-      <label>Jeux vidéo que je joue</label>
+      <label>{{ i18n.t('profile.games') }}</label>
       <div class="tags-input">
         <div class="tags">
           @for (game of games; track game) {
@@ -60,7 +60,7 @@
             type="text"
             [(ngModel)]="newGame"
             name="newGame"
-            placeholder="Ajouter un jeu..."
+            [placeholder]="i18n.t('profile.addGame')"
             (keydown.enter)="$event.preventDefault(); addGame()"
           />
           <button type="button" class="btn-add" (click)="addGame()">+</button>
@@ -68,7 +68,7 @@
       </div>
 
       <!-- Mode de vie -->
-      <label>Mode de vie</label>
+      <label>{{ i18n.t('profile.lifestyle') }}</label>
       <div class="checkbox-group">
         @for (option of lifestyleOptions; track option) {
           <label class="checkbox-option" [class.selected]="lifestyle.includes(option)">
@@ -83,7 +83,7 @@
       </div>
 
       <button type="submit" class="btn-primary" [disabled]="saving()">
-        {{ saving() ? 'Sauvegarde...' : 'Sauvegarder' }}
+        {{ saving() ? i18n.t('profile.saving') : i18n.t('profile.save') }}
       </button>
     </form>
   </div>

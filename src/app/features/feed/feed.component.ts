@@ -3,6 +3,7 @@ import { RouterLink } from '@angular/router';
 import { GroupService } from '../../core/services/group.service';
 import { PostService, Post } from '../../core/services/post.service';
 import { PostCardComponent } from '../../shared/components/post-card/post-card.component';
+import { I18nService } from '../../core/services/i18n.service';
 
 @Component({
   selector: 'app-feed',
@@ -17,7 +18,8 @@ export class FeedComponent implements OnInit {
 
   constructor(
     private groupService: GroupService,
-    private postService: PostService
+    private postService: PostService,
+    public i18n: I18nService
   ) {}
 
   async ngOnInit() {

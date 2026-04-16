@@ -4,11 +4,17 @@
     <a routerLink="/feed" class="logo">Groupit</a>
   </div>
   <div class="navbar-links">
-    <a routerLink="/feed" routerLinkActive="active">Feed</a>
-    <a routerLink="/groups" routerLinkActive="active">Groupes</a>
-    <a routerLink="/search" routerLinkActive="active">Recherche</a>
-    <a routerLink="/profile/edit" routerLinkActive="active">Profil</a>
-    <button class="btn-logout" (click)="logout()">Déconnexion</button>
+    <a routerLink="/feed" routerLinkActive="active">{{ i18n.t('nav.feed') }}</a>
+    <a routerLink="/groups" routerLinkActive="active">{{ i18n.t('nav.groups') }}</a>
+    <a routerLink="/search" routerLinkActive="active">{{ i18n.t('nav.search') }}</a>
+    <a routerLink="/profile/edit" routerLinkActive="active">{{ i18n.t('nav.profile') }}</a>
+    <button class="btn-icon" (click)="theme.toggle()" [title]="theme.theme() === 'dark' ? 'Light mode' : 'Dark mode'">
+      {{ theme.theme() === 'dark' ? '☀️' : '🌙' }}
+    </button>
+    <button class="btn-icon" (click)="i18n.toggle()" title="FR / EN">
+      {{ i18n.lang() === 'fr' ? 'EN' : 'FR' }}
+    </button>
+    <button class="btn-logout" (click)="logout()">{{ i18n.t('nav.logout') }}</button>
   </div>
 </nav>
 }

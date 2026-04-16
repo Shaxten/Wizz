@@ -24,7 +24,7 @@
   <div class="post-footer">
     <span class="post-date">{{ post.created_at | date:'short' }}</span>
     <button class="btn-comment" (click)="toggleComments()">
-      💬 Commentaires
+      💬 {{ i18n.t('comments.title') }}
     </button>
   </div>
 
@@ -32,10 +32,10 @@
   @if (showComments()) {
     <div class="comments-section">
       @if (loadingComments()) {
-        <p class="muted">Chargement...</p>
+        <p class="muted">{{ i18n.t('feed.loading') }}</p>
       } @else {
         @if (comments().length === 0) {
-          <p class="muted">Aucun commentaire.</p>
+          <p class="muted">{{ i18n.t('comments.none') }}</p>
         }
         @for (comment of comments(); track comment.id) {
           <div class="comment">
@@ -62,9 +62,9 @@
             type="text"
             [(ngModel)]="newComment"
             name="newComment"
-            placeholder="Écrire un commentaire..."
+            [placeholder]="i18n.t('comments.placeholder')"
           />
-          <button type="submit" [disabled]="!newComment.trim()">Envoyer</button>
+          <button type="submit" [disabled]="!newComment.trim()">{{ i18n.t('comments.send') }}</button>
         </form>
       }
     </div>

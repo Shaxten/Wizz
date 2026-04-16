@@ -1,15 +1,15 @@
 <div class="group-list">
   <div class="header">
-    <h1>Mes Groupes</h1>
-    <a routerLink="/groups/create" class="btn-create">+ Créer un groupe</a>
+    <h1>{{ i18n.t('groups.title') }}</h1>
+    <a routerLink="/groups/create" class="btn-create">{{ i18n.t('groups.create') }}</a>
   </div>
 
   @if (loading()) {
-    <p class="loading">Chargement...</p>
+    <p class="loading">{{ i18n.t('feed.loading') }}</p>
   } @else if (groups().length === 0) {
     <div class="empty-state">
-      <p>Tu n'es dans aucun groupe.</p>
-      <p><a routerLink="/search">Rechercher des groupes</a> ou <a routerLink="/groups/create">en créer un</a>.</p>
+      <p>{{ i18n.t('groups.empty') }}</p>
+      <p>{{ i18n.t('groups.searchOrCreate') }}</p>
     </div>
   } @else {
     @for (membership of groups(); track membership.group_id) {

@@ -2,6 +2,7 @@ import { Component, OnInit, signal } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { DatePipe } from '@angular/common';
 import { ProfileService, Profile } from '../../../core/services/profile.service';
+import { I18nService } from '../../../core/services/i18n.service';
 
 @Component({
   selector: 'app-profile-view',
@@ -16,7 +17,8 @@ export class ProfileViewComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
-    private profileService: ProfileService
+    private profileService: ProfileService,
+    public i18n: I18nService
   ) {}
 
   async ngOnInit() {

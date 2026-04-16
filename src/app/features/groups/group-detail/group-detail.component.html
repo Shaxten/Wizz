@@ -6,16 +6,16 @@
       <h1>{{ group()!.name }}</h1>
       <p class="description">{{ group()!.description }}</p>
       @if (group()!.is_private) {
-        <span class="badge-private">Privé</span>
+        <span class="badge-private">{{ i18n.t('group.private') }}</span>
       }
     </div>
 
     @if (!memberRole()) {
       <!-- Not a member -->
       @if (requestSent()) {
-        <p class="info-msg">Demande envoyée ! En attente d'approbation.</p>
+        <p class="info-msg">{{ i18n.t('group.requestSent') }}</p>
       } @else {
-        <button class="btn-primary" (click)="requestJoin()">Demander à rejoindre</button>
+        <button class="btn-primary" (click)="requestJoin()">{{ i18n.t('group.requestJoin') }}</button>
       }
     } @else {
       <!-- Action bar -->
@@ -25,21 +25,21 @@
           [class.active]="activePanel() === 'posts'"
           (click)="switchPanel('posts')"
         >
-          📋 Posts
+          📋 {{ i18n.t('group.posts') }}
         </button>
         <button
           class="action-btn"
           [class.active]="activePanel() === 'new-post'"
           (click)="switchPanel('new-post')"
         >
-          ✏️ Nouveau Post
+          ✏️ {{ i18n.t('group.newPost') }}
         </button>
         <button
           class="action-btn"
           [class.active]="activePanel() === 'calendar'"
           (click)="switchPanel('calendar')"
         >
-          📅 Calendrier
+          📅 {{ i18n.t('group.calendar') }}
         </button>
         @if (isOwnerOrAdmin) {
           <button
@@ -47,7 +47,7 @@
             [class.active]="activePanel() === 'settings'"
             (click)="switchPanel('settings')"
           >
-            ⚙️ Settings
+            ⚙️ {{ i18n.t('group.settings') }}
             @if (pendingCount() > 0) {
               <span class="badge-count">{{ pendingCount() }}</span>
             }
@@ -59,7 +59,7 @@
       @if (activePanel() === 'posts') {
         <div class="posts-section">
           @if (posts().length === 0) {
-            <p class="muted">Aucun post dans ce groupe.</p>
+            <p class="muted">{{ i18n.t('group.noPosts') }}</p>
           }
           @for (post of posts(); track post.id) {
             <app-post-card [post]="post" />
@@ -70,12 +70,12 @@
       <!-- NEW POST PANEL -->
       @if (activePanel() === 'new-post') {
         <div class="panel">
-          <h3>Nouveau Post</h3>
+          <h3>{{ i18n.t('group.newPost') }}</h3>
           <div class="post-form">
             <textarea
               [(ngModel)]="newPostContent"
               [ngModelOptions]="{standalone: true}"
-              placeholder="Quoi de neuf ?"
+              [placeholder]="i18n.t('group.postPlaceholder')"
               rows="4"
             ></textarea>
 
@@ -88,7 +88,7 @@
 
             <div class="post-form-actions">
               <label class="btn-attach">
-                📷 Photo
+                📷 {{ i18n.t('group.photo') }}
                 <input type="file" accept="image/*" (change)="onImageSelected($event)" hidden />
               </label>
               <button
@@ -96,7 +96,7 @@
                 (click)="submitPost()"
                 [disabled]="(!newPostContent.trim() && !imagePreview()) || posting()"
               >
-                {{ posting() ? 'Publication...' : 'Publier' }}
+                {{ posting() ? i18n.t('group.publishing') : i18n.t('group.publish') }}
               </button>
             </div>
           </div>
@@ -106,7 +106,7 @@
       <!-- CALENDAR PANEL -->
       @if (activePanel() === 'calendar') {
         <div class="panel">
-          <h3>Événements</h3>
+          <h3>{{ i18n.t('events.title') }}</h3>
 
           <!-- Create event form -->
           <div class="event-form">
@@ -114,12 +114,12 @@
               type="text"
               [(ngModel)]="newEventTitle"
               [ngModelOptions]="{standalone: true}"
-              placeholder="Titre de l'événement"
+              [placeholder]="i18n.t('events.titlePlaceholder')"
             />
             <textarea
               [(ngModel)]="newEventDescription"
               [ngModelOptions]="{standalone: true}"
-              placeholder="Description (optionnel)"
+              [placeholder]="i18n.t('events.descPlaceholder')"
               rows="2"
             ></textarea>
             <input
@@ -133,13 +133,13 @@
               (click)="createEvent()"
               [disabled]="!newEventTitle.trim() || !newEventDate || creatingEvent()"
             >
-              {{ creatingEvent() ? 'Création...' : 'Créer l\'événement' }}
+              {{ creatingEvent() ? i18n.t('events.creating') : i18n.t('events.create') }}
             </button>
           </div>
 
           <!-- Events list -->
           @if (events().length === 0) {
-            <p class="muted" style="margin-top: 1rem;">Aucun événement prévu.</p>
+            <p class="muted" style="margin-top: 1rem;">{{ i18n.t('events.none') }}</p>
           }
           @for (event of events(); track event.id) {
             <div class="event-card">
@@ -149,7 +149,7 @@
                   <span class="event-date">📅 {{ event.event_date | date:'medium' }}</span>
                 </div>
                 @if (event.created_by === auth.user()?.id) {
-                  <button class="btn-danger-sm" (click)="deleteEvent(event.id)">Supprimer</button>
+                  <button class="btn-danger-sm" (click)="deleteEvent(event.id)">{{ i18n.t('events.delete') }}</button>
                 }
               </div>
               @if (event.description) {
@@ -163,21 +163,21 @@
                     [class.active]="getMyRsvp(event) === 'present'"
                     (click)="rsvpEvent(event.id, 'present')"
                   >
-                    ✅ Présent ({{ getRsvpCount(event, 'present') }})
+                    ✅ {{ i18n.t('events.present') }} ({{ getRsvpCount(event, 'present') }})
                   </button>
                   <button
                     class="rsvp-btn maybe"
                     [class.active]="getMyRsvp(event) === 'maybe'"
                     (click)="rsvpEvent(event.id, 'maybe')"
                   >
-                    🤔 Peut-être ({{ getRsvpCount(event, 'maybe') }})
+                    🤔 {{ i18n.t('events.maybe') }} ({{ getRsvpCount(event, 'maybe') }})
                   </button>
                   <button
                     class="rsvp-btn absent"
                     [class.active]="getMyRsvp(event) === 'absent'"
                     (click)="rsvpEvent(event.id, 'absent')"
                   >
-                    ❌ Absent ({{ getRsvpCount(event, 'absent') }})
+                    ❌ {{ i18n.t('events.absent') }} ({{ getRsvpCount(event, 'absent') }})
                   </button>
                 </div>
               </div>
@@ -192,27 +192,27 @@
           <!-- Join requests -->
           @if (group()!.is_private) {
             <h3>
-              Demandes d'adhésion
+              {{ i18n.t('settings.joinRequests') }}
               @if (pendingCount() > 0) {
                 <span class="badge-count-inline">{{ pendingCount() }}</span>
               }
             </h3>
             @if (joinRequests().length === 0) {
-              <p class="muted">Aucune demande en attente.</p>
+              <p class="muted">{{ i18n.t('settings.noRequests') }}</p>
             }
             @for (req of joinRequests(); track req.id) {
               <div class="request-row">
                 <span>{{ req.profiles?.username }}</span>
                 <div class="request-actions">
-                  <button class="btn-accept" (click)="handleRequest(req.id, true, req.user_id)">Accepter</button>
-                  <button class="btn-reject" (click)="handleRequest(req.id, false, req.user_id)">Refuser</button>
+                  <button class="btn-accept" (click)="handleRequest(req.id, true, req.user_id)">{{ i18n.t('settings.accept') }}</button>
+                  <button class="btn-reject" (click)="handleRequest(req.id, false, req.user_id)">{{ i18n.t('settings.reject') }}</button>
                 </div>
               </div>
             }
           }
 
           <!-- Members -->
-          <h3 style="margin-top: 1.5rem;">Membres</h3>
+          <h3 style="margin-top: 1.5rem;">{{ i18n.t('settings.members') }}</h3>
           @for (member of members(); track member.user_id) {
             <div class="member-row">
               <a [routerLink]="['/profile', member.user_id]">
@@ -221,7 +221,7 @@
               <div class="member-actions">
                 <span class="role-badge">{{ member.role }}</span>
                 @if (isOwnerOrAdmin && member.role !== 'owner') {
-                  <button class="btn-danger-sm" (click)="removeMember(member.user_id)">Retirer</button>
+                  <button class="btn-danger-sm" (click)="removeMember(member.user_id)">{{ i18n.t('settings.remove') }}</button>
                 }
               </div>
             </div>
@@ -230,8 +230,8 @@
           <!-- Delete group -->
           @if (isOwner) {
             <div class="danger-zone">
-              <h3>Zone dangereuse</h3>
-              <button class="btn-danger" (click)="deleteGroup()">Supprimer le groupe</button>
+              <h3>{{ i18n.t('settings.dangerZone') }}</h3>
+              <button class="btn-danger" (click)="deleteGroup()">{{ i18n.t('settings.deleteGroup') }}</button>
             </div>
           }
         </div>

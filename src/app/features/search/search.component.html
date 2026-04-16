@@ -1,14 +1,14 @@
 <div class="search-page">
-  <h1>Recherche</h1>
+  <h1>{{ i18n.t('search.title') }}</h1>
 
   <form (ngSubmit)="search()" class="search-bar">
     <input
       type="text"
       [(ngModel)]="query"
       name="query"
-      placeholder="Rechercher des groupes ou des profils..."
+      [placeholder]="i18n.t('search.placeholder')"
     />
-    <button type="submit" class="btn-primary">Rechercher</button>
+    <button type="submit" class="btn-primary">{{ i18n.t('search.submit') }}</button>
   </form>
 
   @if (searched()) {
@@ -29,14 +29,14 @@
 
     @if (tab() === 'groups') {
       @if (groups().length === 0) {
-        <p class="muted">Aucun groupe trouvé.</p>
+        <p class="muted">{{ i18n.t('search.noGroups') }}</p>
       }
       @for (group of groups(); track group.id) {
         <a [routerLink]="['/groups', group.id]" class="result-card">
           <h3>{{ group.name }}</h3>
           <p>{{ group.description }}</p>
           @if (group.is_private) {
-            <span class="badge-private">Privé</span>
+            <span class="badge-private">{{ i18n.t('group.private') }}</span>
           }
         </a>
       }
@@ -44,7 +44,7 @@
 
     @if (tab() === 'profiles') {
       @if (profiles().length === 0) {
-        <p class="muted">Aucun profil trouvé.</p>
+        <p class="muted">{{ i18n.t('search.noProfiles') }}</p>
       }
       @for (profile of profiles(); track profile.id) {
         <a [routerLink]="['/profile', profile.id]" class="result-card profile-result">

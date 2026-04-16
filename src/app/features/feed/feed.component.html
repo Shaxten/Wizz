@@ -1,12 +1,12 @@
 <div class="feed">
-  <h1>Mon Feed</h1>
+  <h1>{{ i18n.t('feed.title') }}</h1>
 
   @if (loading()) {
-    <p class="loading">Chargement...</p>
+    <p class="loading">{{ i18n.t('feed.loading') }}</p>
   } @else if (posts().length === 0) {
     <div class="empty-state">
-      <p>Aucun post pour le moment.</p>
-      <p>Rejoins des <a routerLink="/groups">groupes</a> pour voir du contenu !</p>
+      <p>{{ i18n.t('feed.empty') }}</p>
+      <p>{{ i18n.t('feed.joinGroups') }}</p>
     </div>
   } @else {
     @for (post of posts(); track post.id) {

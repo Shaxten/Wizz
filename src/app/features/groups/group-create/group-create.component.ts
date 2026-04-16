@@ -2,6 +2,7 @@ import { Component, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { GroupService } from '../../../core/services/group.service';
+import { I18nService } from '../../../core/services/i18n.service';
 
 @Component({
   selector: 'app-group-create',
@@ -19,12 +20,13 @@ export class GroupCreateComponent {
 
   constructor(
     private groupService: GroupService,
-    private router: Router
+    private router: Router,
+    public i18n: I18nService
   ) {}
 
   async create() {
     if (!this.name.trim()) {
-      this.error.set('Le nom du groupe est requis.');
+      this.error.set(this.i18n.t('groupCreate.nameRequired'));
       return;
     }
     this.loading.set(true);

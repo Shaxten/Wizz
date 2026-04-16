@@ -3,6 +3,7 @@ import { FormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
 import { GroupService, Group } from '../../core/services/group.service';
 import { ProfileService, Profile } from '../../core/services/profile.service';
+import { I18nService } from '../../core/services/i18n.service';
 
 @Component({
   selector: 'app-search',
@@ -20,7 +21,8 @@ export class SearchComponent {
 
   constructor(
     private groupService: GroupService,
-    private profileService: ProfileService
+    private profileService: ProfileService,
+    public i18n: I18nService
   ) {}
 
   async search() {

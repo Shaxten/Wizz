@@ -2,6 +2,7 @@ import { Component, OnInit, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { ProfileService, Profile } from '../../../core/services/profile.service';
 import { AuthService } from '../../../core/services/auth.service';
+import { I18nService } from '../../../core/services/i18n.service';
 
 @Component({
   selector: 'app-profile-edit',
@@ -26,7 +27,8 @@ export class ProfileEditComponent implements OnInit {
 
   constructor(
     private profileService: ProfileService,
-    private auth: AuthService
+    private auth: AuthService,
+    public i18n: I18nService
   ) {}
 
   async ngOnInit() {
@@ -57,7 +59,7 @@ export class ProfileEditComponent implements OnInit {
     if (error) {
       this.error.set(error.message);
     } else {
-      this.message.set('Profil mis à jour !');
+      this.message.set(this.i18n.t('profile.updated'));
     }
   }
 
@@ -91,7 +93,7 @@ export class ProfileEditComponent implements OnInit {
       const url = await this.profileService.uploadAvatar(file);
       await this.profileService.updateProfile({ avatar_url: url });
       this.profile.update(p => p ? { ...p, avatar_url: url } : p);
-      this.message.set('Photo de profil mise à jour !');
+      this.message.set(this.i18n.t('profile.photoUpdated'));
     } catch (e: any) {
       this.error.set(e.message);
     }

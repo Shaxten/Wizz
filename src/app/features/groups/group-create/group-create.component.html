@@ -1,24 +1,24 @@
 <div class="create-container">
-  <h1>Créer un groupe</h1>
+  <h1>{{ i18n.t('groupCreate.title') }}</h1>
 
   @if (error()) {
     <div class="error-msg">{{ error() }}</div>
   }
 
   <form (ngSubmit)="create()" class="create-form">
-    <label for="name">Nom du groupe</label>
-    <input id="name" type="text" [(ngModel)]="name" name="name" placeholder="Mon super groupe" required />
+    <label for="name">{{ i18n.t('groupCreate.name') }}</label>
+    <input id="name" type="text" [(ngModel)]="name" name="name" [placeholder]="i18n.t('groupCreate.namePlaceholder')" required />
 
-    <label for="description">Description</label>
-    <textarea id="description" [(ngModel)]="description" name="description" placeholder="De quoi parle ce groupe ?" rows="3"></textarea>
+    <label for="description">{{ i18n.t('groupCreate.description') }}</label>
+    <textarea id="description" [(ngModel)]="description" name="description" [placeholder]="i18n.t('groupCreate.descPlaceholder')" rows="3"></textarea>
 
     <label class="checkbox-label">
       <input type="checkbox" [(ngModel)]="isPrivate" name="isPrivate" />
-      Groupe privé (les membres doivent être approuvés)
+      {{ i18n.t('groupCreate.private') }}
     </label>
 
     <button type="submit" class="btn-primary" [disabled]="loading()">
-      {{ loading() ? 'Création...' : 'Créer le groupe' }}
+      {{ loading() ? i18n.t('groupCreate.creating') : i18n.t('groupCreate.submit') }}
     </button>
   </form>
 </div>

@@ -1,23 +1,23 @@
 .feed {
   h1 {
-    color: #fff;
+    color: var(--white);
     margin-bottom: 1.5rem;
   }
 }
 
 .empty-state {
   text-align: center;
-  color: #666;
+  color: var(--text-secondary);
   padding: 3rem 0;
 
   a {
-    color: #3ecf8e;
+    color: var(--accent);
     text-decoration: none;
   }
 }
 
 .loading {
-  color: #666;
+  color: var(--text-secondary);
   text-align: center;
   padding: 2rem;
 }

@@ -7,6 +7,7 @@ import { PostService, Post } from '../../../core/services/post.service';
 import { EventService, GroupEvent } from '../../../core/services/event.service';
 import { AuthService } from '../../../core/services/auth.service';
 import { PostCardComponent } from '../../../shared/components/post-card/post-card.component';
+import { I18nService } from '../../../core/services/i18n.service';
 
 @Component({
   selector: 'app-group-detail',
@@ -51,7 +52,8 @@ export class GroupDetailComponent implements OnInit {
     private groupService: GroupService,
     private postService: PostService,
     private eventService: EventService,
-    public auth: AuthService
+    public auth: AuthService,
+    public i18n: I18nService
   ) {}
 
   async ngOnInit() {
@@ -112,7 +114,7 @@ export class GroupDetailComponent implements OnInit {
   }
 
   async deleteGroup() {
-    if (!confirm('Supprimer ce groupe ? Cette action est irréversible.')) return;
+    if (!confirm(this.i18n.t('settings.confirmDelete'))) return;
     await this.groupService.deleteGroup(this.groupId);
     this.router.navigate(['/groups']);
   }

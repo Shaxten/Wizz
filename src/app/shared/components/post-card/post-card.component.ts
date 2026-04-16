@@ -5,6 +5,7 @@ import { DatePipe } from '@angular/common';
 import { Post } from '../../../core/services/post.service';
 import { CommentService, Comment } from '../../../core/services/comment.service';
 import { AuthService } from '../../../core/services/auth.service';
+import { I18nService } from '../../../core/services/i18n.service';
 
 @Component({
   selector: 'app-post-card',
@@ -24,7 +25,8 @@ export class PostCardComponent {
 
   constructor(
     private commentService: CommentService,
-    public auth: AuthService
+    public auth: AuthService,
+    public i18n: I18nService
   ) {}
 
   async toggleComments() {

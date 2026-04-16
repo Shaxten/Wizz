@@ -13,14 +13,14 @@
       <h1>{{ profile()!.username }}</h1>
 
       @if (profile()!.gender) {
-        <p class="info-line">{{ profile()!.gender === 'homme' ? '♂ Homme' : '♀ Femme' }}</p>
+        <p class="info-line">{{ profile()!.gender === 'homme' ? '♂ ' + i18n.t('profile.male') : '♀ ' + i18n.t('profile.female') }}</p>
       }
 
-      <p class="joined">Membre depuis {{ profile()!.created_at | date:'mediumDate' }}</p>
+      <p class="joined">{{ i18n.t('profile.memberSince') }} {{ profile()!.created_at | date:'mediumDate' }}</p>
 
       @if (profile()!.games.length) {
         <div class="section">
-          <h3>🎮 Jeux vidéo</h3>
+          <h3>{{ i18n.t('profile.gamesTitle') }}</h3>
           <div class="tags">
             @for (game of profile()!.games; track game) {
               <span class="tag">{{ game }}</span>
@@ -31,7 +31,7 @@
 
       @if (profile()!.lifestyle.length) {
         <div class="section">
-          <h3>Mode de vie</h3>
+          <h3>{{ i18n.t('profile.lifestyleTitle') }}</h3>
           <div class="tags">
             @for (item of profile()!.lifestyle; track item) {
               <span class="tag lifestyle">{{ item }}</span>

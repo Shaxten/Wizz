@@ -2,11 +2,11 @@
   max-width: 500px;
   margin: 2rem auto;
   padding: 2rem;
-  background: #161616;
+  background: var(--bg-card);
   border-radius: 12px;
-  border: 1px solid #1e1e1e;
+  border: 1px solid var(--border);
 
-  h1 { color: #fff; margin-bottom: 1.5rem; }
+  h1 { color: var(--white); margin-bottom: 1.5rem; }
 }
 
 .create-form {
@@ -14,19 +14,19 @@
   flex-direction: column;
   gap: 0.75rem;
 
-  label { color: #999; font-size: 0.85rem; }
+  label { color: var(--text-secondary); font-size: 0.85rem; }
 
   input, textarea {
     padding: 0.7rem;
     border-radius: 8px;
-    border: 1px solid #2a2a2a;
-    background: #111;
-    color: #fff;
+    border: 1px solid var(--border);
+    background: var(--bg-input);
+    color: var(--white);
     font-size: 0.95rem;
     font-family: inherit;
     resize: vertical;
 
-    &::placeholder { color: #555; }
+    &::placeholder { color: var(--text-muted); }
   }
 }
 
@@ -34,19 +34,19 @@
   display: flex;
   align-items: center;
   gap: 0.5rem;
-  color: #999;
+  color: var(--text-secondary);
   cursor: pointer;
 
   input[type="checkbox"] {
     width: auto;
-    accent-color: #3ecf8e;
+    accent-color: var(--accent);
   }
 }
 
 .btn-primary {
   margin-top: 0.5rem;
   padding: 0.75rem;
-  background: #3ecf8e;
+  background: var(--accent);
   color: #000;
   border: none;
   border-radius: 8px;
@@ -54,13 +54,13 @@
   font-weight: 600;
   cursor: pointer;
 
-  &:hover { background: #35b87a; }
+  &:hover { background: var(--accent-hover); }
   &:disabled { opacity: 0.6; cursor: not-allowed; }
 }
 
 .error-msg {
-  background: #dc262622;
-  color: #f87171;
+  background: var(--danger-bg);
+  color: var(--danger-text);
   padding: 0.6rem;
   border-radius: 6px;
   margin-bottom: 1rem;
