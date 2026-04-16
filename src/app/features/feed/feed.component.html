@@ -1,0 +1,16 @@
+<div class="feed">
+  <h1>Mon Feed</h1>
+
+  @if (loading()) {
+    <p class="loading">Chargement...</p>
+  } @else if (posts().length === 0) {
+    <div class="empty-state">
+      <p>Aucun post pour le moment.</p>
+      <p>Rejoins des <a routerLink="/groups">groupes</a> pour voir du contenu !</p>
+    </div>
+  } @else {
+    @for (post of posts(); track post.id) {
+      <app-post-card [post]="post" [showGroup]="true" />
+    }
+  }
+</div>

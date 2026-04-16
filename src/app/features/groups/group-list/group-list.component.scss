@@ -1,0 +1,59 @@
+.group-list {
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+
+    h1 { color: #fff; }
+  }
+
+  .btn-create {
+    background: #7c3aed;
+    color: #fff;
+    padding: 0.6rem 1.2rem;
+    border-radius: 8px;
+    text-decoration: none;
+    font-size: 0.9rem;
+
+    &:hover { background: #6d28d9; }
+  }
+}
+
+.group-card {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #16213e;
+  border-radius: 10px;
+  padding: 1.25rem;
+  margin-bottom: 0.75rem;
+  text-decoration: none;
+  transition: background 0.2s;
+
+  &:hover { background: #1a2744; }
+
+  .group-info {
+    h3 { color: #fff; margin: 0 0 0.25rem; }
+    p { color: #888; margin: 0; font-size: 0.85rem; }
+  }
+
+  .role-badge {
+    background: #7c3aed22;
+    color: #7c3aed;
+    padding: 0.25rem 0.75rem;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    text-transform: capitalize;
+  }
+}
+
+.empty-state {
+  text-align: center;
+  color: #888;
+  padding: 3rem 0;
+
+  a { color: #7c3aed; text-decoration: none; }
+}
+
+.loading { color: #888; text-align: center; padding: 2rem; }

@@ -1,0 +1,72 @@
+<div class="post-card">
+  <div class="post-header">
+    <a [routerLink]="['/profile', post.author_id]" class="post-author">
+      @if (post.profiles?.avatar_url) {
+        <img [src]="post.profiles?.avatar_url" [alt]="post.profiles?.username" class="avatar" />
+      } @else {
+        <div class="avatar-placeholder">{{ post.profiles?.username?.charAt(0)?.toUpperCase() }}</div>
+      }
+      <span>{{ post.profiles?.username }}</span>
+    </a>
+    @if (showGroup && post.groups?.name) {
+      <span class="post-group">
+        dans <a [routerLink]="['/groups', post.group_id]">{{ post.groups?.name }}</a>
+      </span>
+    }
+  </div>
+
+  <p class="post-content">{{ post.content }}</p>
+
+  @if (post.image_url) {
+    <img [src]="post.image_url" alt="Image du post" class="post-image" />
+  }
+
+  <div class="post-footer">
+    <span class="post-date">{{ post.created_at | date:'short' }}</span>
+    <button class="btn-comment" (click)="toggleComments()">
+      💬 Commentaires
+    </button>
+  </div>
+
+  <!-- Comments section -->
+  @if (showComments()) {
+    <div class="comments-section">
+      @if (loadingComments()) {
+        <p class="muted">Chargement...</p>
+      } @else {
+        @if (comments().length === 0) {
+          <p class="muted">Aucun commentaire.</p>
+        }
+        @for (comment of comments(); track comment.id) {
+          <div class="comment">
+            <div class="comment-header">
+              <a [routerLink]="['/profile', comment.author_id]" class="comment-author">
+                @if (comment.profiles?.avatar_url) {
+                  <img [src]="comment.profiles?.avatar_url" [alt]="comment.profiles?.username" class="avatar-sm" />
+                } @else {
+                  <div class="avatar-sm-placeholder">{{ comment.profiles?.username?.charAt(0)?.toUpperCase() }}</div>
+                }
+                <span>{{ comment.profiles?.username }}</span>
+              </a>
+              <span class="comment-date">{{ comment.created_at | date:'short' }}</span>
+              @if (comment.author_id === auth.user()?.id) {
+                <button class="btn-delete-comment" (click)="deleteComment(comment.id)">✕</button>
+              }
+            </div>
+            <p class="comment-content">{{ comment.content }}</p>
+          </div>
+        }
+
+        <form (ngSubmit)="submitComment()" class="comment-form">
+          <input
+            type="text"
+            [(ngModel)]="newComment"
+            name="newComment"
+            placeholder="Écrire un commentaire..."
+          />
+          <button type="submit" [disabled]="!newComment.trim()">Envoyer</button>
+        </form>
+      }
+    </div>
+  }
+</div>

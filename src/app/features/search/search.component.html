@@ -1,0 +1,61 @@
+<div class="search-page">
+  <h1>Recherche</h1>
+
+  <form (ngSubmit)="search()" class="search-bar">
+    <input
+      type="text"
+      [(ngModel)]="query"
+      name="query"
+      placeholder="Rechercher des groupes ou des profils..."
+    />
+    <button type="submit" class="btn-primary">Rechercher</button>
+  </form>
+
+  @if (searched()) {
+    <div class="tabs">
+      <button
+        [class.active]="tab() === 'groups'"
+        (click)="setTab('groups')"
+      >
+        Groupes ({{ groups().length }})
+      </button>
+      <button
+        [class.active]="tab() === 'profiles'"
+        (click)="setTab('profiles')"
+      >
+        Profils ({{ profiles().length }})
+      </button>
+    </div>
+
+    @if (tab() === 'groups') {
+      @if (groups().length === 0) {
+        <p class="muted">Aucun groupe trouvé.</p>
+      }
+      @for (group of groups(); track group.id) {
+        <a [routerLink]="['/groups', group.id]" class="result-card">
+          <h3>{{ group.name }}</h3>
+          <p>{{ group.description }}</p>
+          @if (group.is_private) {
+            <span class="badge-private">Privé</span>
+          }
+        </a>
+      }
+    }
+
+    @if (tab() === 'profiles') {
+      @if (profiles().length === 0) {
+        <p class="muted">Aucun profil trouvé.</p>
+      }
+      @for (profile of profiles(); track profile.id) {
+        <a [routerLink]="['/profile', profile.id]" class="result-card profile-result">
+          @if (profile.avatar_url) {
+            <img [src]="profile.avatar_url" [alt]="profile.username" class="avatar" />
+          } @else {
+            <div class="avatar-placeholder">{{ profile.username.charAt(0).toUpperCase() }}</div>
+          }
+          <span>{{ profile.username }}</span>
+        </a>
+      }
+    }
+  }
+</div>

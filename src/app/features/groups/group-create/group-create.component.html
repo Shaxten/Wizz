@@ -1,0 +1,24 @@
+<div class="create-container">
+  <h1>Créer un groupe</h1>
+
+  @if (error()) {
+    <div class="error-msg">{{ error() }}</div>
+  }
+
+  <form (ngSubmit)="create()" class="create-form">
+    <label for="name">Nom du groupe</label>
+    <input id="name" type="text" [(ngModel)]="name" name="name" placeholder="Mon super groupe" required />
+
+    <label for="description">Description</label>
+    <textarea id="description" [(ngModel)]="description" name="description" placeholder="De quoi parle ce groupe ?" rows="3"></textarea>
+
+    <label class="checkbox-label">
+      <input type="checkbox" [(ngModel)]="isPrivate" name="isPrivate" />
+      Groupe privé (les membres doivent être approuvés)
+    </label>
+
+    <button type="submit" class="btn-primary" [disabled]="loading()">
+      {{ loading() ? 'Création...' : 'Créer le groupe' }}
+    </button>
+  </form>
+</div>

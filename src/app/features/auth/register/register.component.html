@@ -1,0 +1,38 @@
+<div class="auth-container">
+  <h1>Inscription</h1>
+
+  @if (error()) {
+    <div class="error-msg">{{ error() }}</div>
+  }
+
+  @if (success()) {
+    <div class="success-msg">
+      Compte créé ! Vérifie ton email pour confirmer ton inscription.
+    </div>
+  } @else {
+    <form (ngSubmit)="register()" class="auth-form">
+      <label for="email">Email</label>
+      <input id="email" type="email" [(ngModel)]="email" name="email" placeholder="email@exemple.com" required />
+
+      <label for="password">Mot de passe</label>
+      <input id="password" type="password" [(ngModel)]="password" name="password" placeholder="Min. 6 caractères" required />
+
+      <label for="confirmPassword">Confirmer le mot de passe</label>
+      <input id="confirmPassword" type="password" [(ngModel)]="confirmPassword" name="confirmPassword" placeholder="••••••••" required />
+
+      <button type="submit" class="btn-primary" [disabled]="loading()">
+        {{ loading() ? 'Inscription...' : "S'inscrire" }}
+      </button>
+    </form>
+
+    <div class="divider"><span>ou</span></div>
+
+    <button class="btn-discord" (click)="registerWithDiscord()">
+      Continuer avec Discord
+    </button>
+  }
+
+  <p class="auth-link">
+    Déjà un compte ? <a routerLink="/login">Se connecter</a>
+  </p>
+</div>

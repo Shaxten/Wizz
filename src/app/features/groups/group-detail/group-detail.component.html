@@ -1,0 +1,111 @@
+@if (loading()) {
+  <p class="loading">Chargement...</p>
+} @else if (group()) {
+  <div class="group-detail">
+    <div class="group-header">
+      <h1>{{ group()!.name }}</h1>
+      <p class="description">{{ group()!.description }}</p>
+      @if (group()!.is_private) {
+        <span class="badge-private">Privé</span>
+      }
+    </div>
+
+    <!-- Actions selon le statut -->
+    @if (!memberRole()) {
+      @if (requestSent()) {
+        <p class="info-msg">Demande envoyée ! En attente d'approbation.</p>
+      } @else {
+        <button class="btn-primary" (click)="requestJoin()">Demander à rejoindre</button>
+      }
+    } @else {
+      <!-- Zone de post -->
+      <div class="post-form">
+        <textarea
+          [(ngModel)]="newPostContent"
+          placeholder="Quoi de neuf ?"
+          rows="3"
+        ></textarea>
+
+        @if (imagePreview()) {
+          <div class="image-preview">
+            <img [src]="imagePreview()" alt="Aperçu" />
+            <button class="btn-remove-image" (click)="removeImage()">✕</button>
+          </div>
+        }
+
+        <div class="post-form-actions">
+          <label class="btn-attach">
+            📷 Photo
+            <input type="file" accept="image/*" (change)="onImageSelected($event)" hidden />
+          </label>
+          <button class="btn-primary" (click)="submitPost()" [disabled]="(!newPostContent.trim() && !imagePreview()) || posting()">
+            {{ posting() ? 'Publication...' : 'Publier' }}
+          </button>
+        </div>
+      </div>
+
+      <!-- Admin actions -->
+      @if (isOwnerOrAdmin) {
+        <div class="admin-actions">
+          <button class="btn-secondary" (click)="loadMembers()">Gérer les membres</button>
+          @if (group()!.is_private) {
+            <button class="btn-secondary" (click)="loadJoinRequests()">
+              Demandes d'adhésion
+            </button>
+          }
+          @if (isOwner) {
+            <button class="btn-danger" (click)="deleteGroup()">Supprimer le groupe</button>
+          }
+        </div>
+      }
+
+      <!-- Membres panel -->
+      @if (showMembers()) {
+        <div class="panel">
+          <h3>Membres</h3>
+          @for (member of members(); track member.user_id) {
+            <div class="member-row">
+              <a [routerLink]="['/profile', member.user_id]">
+                {{ member.profiles?.username }}
+              </a>
+              <span class="role-badge">{{ member.role }}</span>
+              @if (isOwnerOrAdmin && member.role !== 'owner') {
+                <button class="btn-danger-sm" (click)="removeMember(member.user_id)">Retirer</button>
+              }
+            </div>
+          }
+        </div>
+      }
+
+      <!-- Join requests panel -->
+      @if (showRequests()) {
+        <div class="panel">
+          <h3>Demandes en attente</h3>
+          @if (joinRequests().length === 0) {
+            <p class="muted">Aucune demande en attente.</p>
+          }
+          @for (req of joinRequests(); track req.id) {
+            <div class="request-row">
+              <span>{{ req.profiles?.username }}</span>
+              <div class="request-actions">
+                <button class="btn-accept" (click)="handleRequest(req.id, true, req.user_id)">Accepter</button>
+                <button class="btn-reject" (click)="handleRequest(req.id, false, req.user_id)">Refuser</button>
+              </div>
+            </div>
+          }
+        </div>
+      }
+
+      <!-- Posts -->
+      <div class="posts-section">
+        <h2>Posts</h2>
+        @if (posts().length === 0) {
+          <p class="muted">Aucun post dans ce groupe.</p>
+        }
+        @for (post of posts(); track post.id) {
+          <app-post-card [post]="post" />
+        }
+      </div>
+    }
+  </div>
+}

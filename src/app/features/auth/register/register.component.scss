@@ -1,0 +1,107 @@
+.auth-container {
+  max-width: 400px;
+  margin: 3rem auto;
+  padding: 2rem;
+  background: #16213e;
+  border-radius: 12px;
+
+  h1 {
+    text-align: center;
+    color: #fff;
+    margin-bottom: 1.5rem;
+  }
+}
+
+.auth-form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+
+  label { color: #ccc; font-size: 0.85rem; }
+
+  input {
+    padding: 0.7rem;
+    border-radius: 8px;
+    border: 1px solid #333;
+    background: #0f3460;
+    color: #fff;
+    font-size: 0.95rem;
+
+    &::placeholder { color: #666; }
+  }
+}
+
+.btn-primary {
+  margin-top: 0.5rem;
+  padding: 0.75rem;
+  background: #7c3aed;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  cursor: pointer;
+
+  &:hover { background: #6d28d9; }
+  &:disabled { opacity: 0.6; cursor: not-allowed; }
+}
+
+.btn-discord {
+  width: 100%;
+  padding: 0.75rem;
+  background: #5865f2;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  cursor: pointer;
+
+  &:hover { background: #4752c4; }
+}
+
+.divider {
+  display: flex;
+  align-items: center;
+  margin: 1.25rem 0;
+  color: #666;
+
+  &::before, &::after {
+    content: '';
+    flex: 1;
+    border-bottom: 1px solid #333;
+  }
+
+  span { padding: 0 0.75rem; font-size: 0.85rem; }
+}
+
+.error-msg {
+  background: #dc262622;
+  color: #f87171;
+  padding: 0.6rem;
+  border-radius: 6px;
+  margin-bottom: 1rem;
+  font-size: 0.85rem;
+  text-align: center;
+}
+
+.success-msg {
+  background: #16a34a22;
+  color: #4ade80;
+  padding: 0.75rem;
+  border-radius: 6px;
+  text-align: center;
+  font-size: 0.9rem;
+}
+
+.auth-link {
+  text-align: center;
+  margin-top: 1rem;
+  color: #999;
+  font-size: 0.85rem;
+
+  a {
+    color: #7c3aed;
+    text-decoration: none;
+
+    &:hover { text-decoration: underline; }
+  }
+}

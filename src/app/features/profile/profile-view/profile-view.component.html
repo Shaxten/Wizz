@@ -1,0 +1,17 @@
+@if (loading()) {
+  <p class="loading">Chargement...</p>
+} @else if (profile()) {
+  <div class="profile-view">
+    <div class="profile-card">
+      @if (profile()!.avatar_url) {
+        <img [src]="profile()!.avatar_url" [alt]="profile()!.username" class="avatar-large" />
+      } @else {
+        <div class="avatar-large-placeholder">
+          {{ profile()!.username.charAt(0).toUpperCase() }}
+        </div>
+      }
+      <h1>{{ profile()!.username }}</h1>
+      <p class="joined">Membre depuis {{ profile()!.created_at | date:'mediumDate' }}</p>
+    </div>
+  </div>
+}

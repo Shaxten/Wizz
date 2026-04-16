@@ -1,0 +1,25 @@
+<div class="group-list">
+  <div class="header">
+    <h1>Mes Groupes</h1>
+    <a routerLink="/groups/create" class="btn-create">+ Créer un groupe</a>
+  </div>
+
+  @if (loading()) {
+    <p class="loading">Chargement...</p>
+  } @else if (groups().length === 0) {
+    <div class="empty-state">
+      <p>Tu n'es dans aucun groupe.</p>
+      <p><a routerLink="/search">Rechercher des groupes</a> ou <a routerLink="/groups/create">en créer un</a>.</p>
+    </div>
+  } @else {
+    @for (membership of groups(); track membership.group_id) {
+      <a [routerLink]="['/groups', membership.group_id]" class="group-card">
+        <div class="group-info">
+          <h3>{{ membership.groups?.name }}</h3>
+          <p>{{ membership.groups?.description }}</p>
+        </div>
+        <span class="role-badge">{{ membership.role }}</span>
+      </a>
+    }
+  }
+</div>

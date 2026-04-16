@@ -1,0 +1,56 @@
+@if (loading()) {
+  <p class="loading">Chargement...</p>
+} @else {
+  <div class="edit-container">
+    <h1>Mon Profil</h1>
+
+    @if (error()) {
+      <div class="error-msg">{{ error() }}</div>
+    }
+    @if (message()) {
+      <div class="success-msg">{{ message() }}</div>
+    }
+
+    <!-- Avatar -->
+    <div class="avatar-section">
+      @if (profile()?.avatar_url) {
+        <img [src]="profile()!.avatar_url" alt="Avatar" class="avatar-large" />
+      } @else {
+        <div class="avatar-large-placeholder">
+          {{ username.charAt(0).toUpperCase() }}
+        </div>
+      }
+      <label class="btn-secondary upload-btn">
+        Changer la photo
+        <input type="file" accept="image/*" (change)="onAvatarSelected($event)" hidden />
+      </label>
+    </div>
+
+    <!-- Username -->
+    <form (ngSubmit)="saveProfile()" class="edit-form">
+      <label for="username">Nom d'utilisateur</label>
+      <input id="username" type="text" [(ngModel)]="username" name="username" required />
+      <button type="submit" class="btn-primary" [disabled]="saving()">
+        {{ saving() ? 'Sauvegarde...' : 'Sauvegarder' }}
+      </button>
+    </form>
+
+    <!-- Password (email users only) -->
+    @if (isEmailUser()) {
+      <div class="password-section">
+        <h2>Changer le mot de passe</h2>
+        <form (ngSubmit)="changePassword()" class="edit-form">
+          <label for="newPassword">Nouveau mot de passe</label>
+          <input id="newPassword" type="password" [(ngModel)]="newPassword" name="newPassword" placeholder="Min. 6 caractères" />
+
+          <label for="confirmPassword">Confirmer</label>
+          <input id="confirmPassword" type="password" [(ngModel)]="confirmPassword" name="confirmPassword" placeholder="••••••••" />
+
+          <button type="submit" class="btn-primary" [disabled]="saving()">
+            Changer le mot de passe
+          </button>
+        </form>
+      </div>
+    }
+  </div>
+}

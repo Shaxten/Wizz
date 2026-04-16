@@ -1,0 +1,14 @@
+@if (auth.isLoggedIn()) {
+<nav class="navbar">
+  <div class="navbar-brand">
+    <a routerLink="/feed" class="logo">Groupit</a>
+  </div>
+  <div class="navbar-links">
+    <a routerLink="/feed" routerLinkActive="active">Feed</a>
+    <a routerLink="/groups" routerLinkActive="active">Groupes</a>
+    <a routerLink="/search" routerLinkActive="active">Recherche</a>
+    <a routerLink="/profile/edit" routerLinkActive="active">Profil</a>
+    <button class="btn-logout" (click)="logout()">Déconnexion</button>
+  </div>
+</nav>
+}
