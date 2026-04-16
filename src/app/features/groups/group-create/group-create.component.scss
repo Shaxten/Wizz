@@ -2,8 +2,9 @@
   max-width: 500px;
   margin: 2rem auto;
   padding: 2rem;
-  background: #16213e;
+  background: #161616;
   border-radius: 12px;
+  border: 1px solid #1e1e1e;
 
   h1 { color: #fff; margin-bottom: 1.5rem; }
 }
@@ -13,19 +14,19 @@
   flex-direction: column;
   gap: 0.75rem;
 
-  label { color: #ccc; font-size: 0.85rem; }
+  label { color: #999; font-size: 0.85rem; }
 
   input, textarea {
     padding: 0.7rem;
     border-radius: 8px;
-    border: 1px solid #333;
-    background: #0f3460;
+    border: 1px solid #2a2a2a;
+    background: #111;
     color: #fff;
     font-size: 0.95rem;
     font-family: inherit;
     resize: vertical;
 
-    &::placeholder { color: #666; }
+    &::placeholder { color: #555; }
   }
 }
 
@@ -33,26 +34,27 @@
   display: flex;
   align-items: center;
   gap: 0.5rem;
-  color: #ccc;
+  color: #999;
   cursor: pointer;
 
   input[type="checkbox"] {
     width: auto;
-    accent-color: #7c3aed;
+    accent-color: #3ecf8e;
   }
 }
 
 .btn-primary {
   margin-top: 0.5rem;
   padding: 0.75rem;
-  background: #7c3aed;
-  color: #fff;
+  background: #3ecf8e;
+  color: #000;
   border: none;
   border-radius: 8px;
   font-size: 1rem;
+  font-weight: 600;
   cursor: pointer;
 
-  &:hover { background: #6d28d9; }
+  &:hover { background: #35b87a; }
   &:disabled { opacity: 0.6; cursor: not-allowed; }
 }
 

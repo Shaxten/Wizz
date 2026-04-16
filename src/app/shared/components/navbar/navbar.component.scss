@@ -3,16 +3,17 @@
   align-items: center;
   justify-content: space-between;
   padding: 0.75rem 2rem;
-  background: #1a1a2e;
+  background: #111;
   color: #fff;
   position: sticky;
   top: 0;
   z-index: 100;
+  border-bottom: 1px solid #1e1e1e;
 
   .logo {
     font-size: 1.4rem;
     font-weight: 700;
-    color: #7c3aed;
+    color: #3ecf8e;
     text-decoration: none;
   }
 
@@ -22,30 +23,30 @@
     gap: 1.25rem;
 
     a {
-      color: #ccc;
+      color: #888;
       text-decoration: none;
       font-size: 0.9rem;
       transition: color 0.2s;
 
       &:hover,
       &.active {
-        color: #7c3aed;
+        color: #3ecf8e;
       }
     }
   }
 
   .btn-logout {
     background: transparent;
-    border: 1px solid #7c3aed;
-    color: #7c3aed;
+    border: 1px solid #3ecf8e;
+    color: #3ecf8e;
     padding: 0.4rem 1rem;
     border-radius: 6px;
     cursor: pointer;
     font-size: 0.85rem;
 
     &:hover {
-      background: #7c3aed;
-      color: #fff;
+      background: #3ecf8e;
+      color: #000;
     }
   }
 }

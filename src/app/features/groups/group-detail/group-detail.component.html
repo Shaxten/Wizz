@@ -10,102 +10,230 @@
       }
     </div>
 
-    <!-- Actions selon le statut -->
     @if (!memberRole()) {
+      <!-- Not a member -->
       @if (requestSent()) {
         <p class="info-msg">Demande envoyée ! En attente d'approbation.</p>
       } @else {
         <button class="btn-primary" (click)="requestJoin()">Demander à rejoindre</button>
       }
     } @else {
-      <!-- Zone de post -->
-      <div class="post-form">
-        <textarea
-          [(ngModel)]="newPostContent"
-          placeholder="Quoi de neuf ?"
-          rows="3"
-        ></textarea>
-
-        @if (imagePreview()) {
-          <div class="image-preview">
-            <img [src]="imagePreview()" alt="Aperçu" />
-            <button class="btn-remove-image" (click)="removeImage()">✕</button>
-          </div>
-        }
-
-        <div class="post-form-actions">
-          <label class="btn-attach">
-            📷 Photo
-            <input type="file" accept="image/*" (change)="onImageSelected($event)" hidden />
-          </label>
-          <button class="btn-primary" (click)="submitPost()" [disabled]="(!newPostContent.trim() && !imagePreview()) || posting()">
-            {{ posting() ? 'Publication...' : 'Publier' }}
+      <!-- Action bar -->
+      <div class="action-bar">
+        <button
+          class="action-btn"
+          [class.active]="activePanel() === 'posts'"
+          (click)="switchPanel('posts')"
+        >
+          📋 Posts
+        </button>
+        <button
+          class="action-btn"
+          [class.active]="activePanel() === 'new-post'"
+          (click)="switchPanel('new-post')"
+        >
+          ✏️ Nouveau Post
+        </button>
+        <button
+          class="action-btn"
+          [class.active]="activePanel() === 'calendar'"
+          (click)="switchPanel('calendar')"
+        >
+          📅 Calendrier
+        </button>
+        @if (isOwnerOrAdmin) {
+          <button
+            class="action-btn"
+            [class.active]="activePanel() === 'settings'"
+            (click)="switchPanel('settings')"
+          >
+            ⚙️ Settings
+            @if (pendingCount() > 0) {
+              <span class="badge-count">{{ pendingCount() }}</span>
+            }
           </button>
-        </div>
+        }
       </div>
 
-      <!-- Admin actions -->
-      @if (isOwnerOrAdmin) {
-        <div class="admin-actions">
-          <button class="btn-secondary" (click)="loadMembers()">Gérer les membres</button>
-          @if (group()!.is_private) {
-            <button class="btn-secondary" (click)="loadJoinRequests()">
-              Demandes d'adhésion
-            </button>
+      <!-- POSTS PANEL -->
+      @if (activePanel() === 'posts') {
+        <div class="posts-section">
+          @if (posts().length === 0) {
+            <p class="muted">Aucun post dans ce groupe.</p>
           }
-          @if (isOwner) {
-            <button class="btn-danger" (click)="deleteGroup()">Supprimer le groupe</button>
+          @for (post of posts(); track post.id) {
+            <app-post-card [post]="post" />
           }
         </div>
       }
 
-      <!-- Membres panel -->
-      @if (showMembers()) {
+      <!-- NEW POST PANEL -->
+      @if (activePanel() === 'new-post') {
         <div class="panel">
-          <h3>Membres</h3>
-          @for (member of members(); track member.user_id) {
-            <div class="member-row">
-              <a [routerLink]="['/profile', member.user_id]">
-                {{ member.profiles?.username }}
-              </a>
-              <span class="role-badge">{{ member.role }}</span>
-              @if (isOwnerOrAdmin && member.role !== 'owner') {
-                <button class="btn-danger-sm" (click)="removeMember(member.user_id)">Retirer</button>
-              }
+          <h3>Nouveau Post</h3>
+          <div class="post-form">
+            <textarea
+              [(ngModel)]="newPostContent"
+              placeholder="Quoi de neuf ?"
+              rows="4"
+            ></textarea>
+
+            @if (imagePreview()) {
+              <div class="image-preview">
+                <img [src]="imagePreview()" alt="Aperçu" />
+                <button class="btn-remove-image" (click)="removeImage()">✕</button>
+              </div>
+            }
+
+            <div class="post-form-actions">
+              <label class="btn-attach">
+                📷 Photo
+                <input type="file" accept="image/*" (change)="onImageSelected($event)" hidden />
+              </label>
+              <button
+                class="btn-primary"
+                (click)="submitPost()"
+                [disabled]="(!newPostContent.trim() && !imagePreview()) || posting()"
+              >
+                {{ posting() ? 'Publication...' : 'Publier' }}
+              </button>
             </div>
-          }
+          </div>
         </div>
       }
 
-      <!-- Join requests panel -->
-      @if (showRequests()) {
+      <!-- CALENDAR PANEL -->
+      @if (activePanel() === 'calendar') {
         <div class="panel">
-          <h3>Demandes en attente</h3>
-          @if (joinRequests().length === 0) {
-            <p class="muted">Aucune demande en attente.</p>
+          <h3>Événements</h3>
+
+          <!-- Create event form -->
+          <div class="event-form">
+            <input
+              type="text"
+              [(ngModel)]="newEventTitle"
+              name="eventTitle"
+              placeholder="Titre de l'événement"
+            />
+            <textarea
+              [(ngModel)]="newEventDescription"
+              name="eventDesc"
+              placeholder="Description (optionnel)"
+              rows="2"
+            ></textarea>
+            <input
+              type="datetime-local"
+              [(ngModel)]="newEventDate"
+              name="eventDate"
+            />
+            <button
+              class="btn-primary"
+              (click)="createEvent()"
+              [disabled]="!newEventTitle.trim() || !newEventDate || creatingEvent()"
+            >
+              {{ creatingEvent() ? 'Création...' : 'Créer l\'événement' }}
+            </button>
+          </div>
+
+          <!-- Events list -->
+          @if (events().length === 0) {
+            <p class="muted" style="margin-top: 1rem;">Aucun événement prévu.</p>
           }
-          @for (req of joinRequests(); track req.id) {
-            <div class="request-row">
-              <span>{{ req.profiles?.username }}</span>
-              <div class="request-actions">
-                <button class="btn-accept" (click)="handleRequest(req.id, true, req.user_id)">Accepter</button>
-                <button class="btn-reject" (click)="handleRequest(req.id, false, req.user_id)">Refuser</button>
+          @for (event of events(); track event.id) {
+            <div class="event-card">
+              <div class="event-header">
+                <div>
+                  <h4>{{ event.title }}</h4>
+                  <span class="event-date">📅 {{ event.event_date | date:'medium' }}</span>
+                </div>
+                @if (event.created_by === auth.user()?.id) {
+                  <button class="btn-danger-sm" (click)="deleteEvent(event.id)">Supprimer</button>
+                }
+              </div>
+              @if (event.description) {
+                <p class="event-desc">{{ event.description }}</p>
+              }
+
+              <div class="rsvp-section">
+                <div class="rsvp-buttons">
+                  <button
+                    class="rsvp-btn present"
+                    [class.active]="getMyRsvp(event) === 'present'"
+                    (click)="rsvpEvent(event.id, 'present')"
+                  >
+                    ✅ Présent ({{ getRsvpCount(event, 'present') }})
+                  </button>
+                  <button
+                    class="rsvp-btn maybe"
+                    [class.active]="getMyRsvp(event) === 'maybe'"
+                    (click)="rsvpEvent(event.id, 'maybe')"
+                  >
+                    🤔 Peut-être ({{ getRsvpCount(event, 'maybe') }})
+                  </button>
+                  <button
+                    class="rsvp-btn absent"
+                    [class.active]="getMyRsvp(event) === 'absent'"
+                    (click)="rsvpEvent(event.id, 'absent')"
+                  >
+                    ❌ Absent ({{ getRsvpCount(event, 'absent') }})
+                  </button>
+                </div>
               </div>
             </div>
           }
         </div>
       }
 
-      <!-- Posts -->
-      <div class="posts-section">
-        <h2>Posts</h2>
-        @if (posts().length === 0) {
-          <p class="muted">Aucun post dans ce groupe.</p>
-        }
-        @for (post of posts(); track post.id) {
-          <app-post-card [post]="post" />
-        }
-      </div>
+      <!-- SETTINGS PANEL -->
+      @if (activePanel() === 'settings') {
+        <div class="panel">
+          <!-- Join requests -->
+          @if (group()!.is_private) {
+            <h3>
+              Demandes d'adhésion
+              @if (pendingCount() > 0) {
+                <span class="badge-count-inline">{{ pendingCount() }}</span>
+              }
+            </h3>
+            @if (joinRequests().length === 0) {
+              <p class="muted">Aucune demande en attente.</p>
+            }
+            @for (req of joinRequests(); track req.id) {
+              <div class="request-row">
+                <span>{{ req.profiles?.username }}</span>
+                <div class="request-actions">
+                  <button class="btn-accept" (click)="handleRequest(req.id, true, req.user_id)">Accepter</button>
+                  <button class="btn-reject" (click)="handleRequest(req.id, false, req.user_id)">Refuser</button>
+                </div>
+              </div>
+            }
+          }
+
+          <!-- Members -->
+          <h3 style="margin-top: 1.5rem;">Membres</h3>
+          @for (member of members(); track member.user_id) {
+            <div class="member-row">
+              <a [routerLink]="['/profile', member.user_id]">
+                {{ member.profiles?.username }}
+              </a>
+              <div class="member-actions">
+                <span class="role-badge">{{ member.role }}</span>
+                @if (isOwnerOrAdmin && member.role !== 'owner') {
+                  <button class="btn-danger-sm" (click)="removeMember(member.user_id)">Retirer</button>
+                }
+              </div>
+            </div>
+          }
+
+          <!-- Delete group -->
+          @if (isOwner) {
+            <div class="danger-zone">
+              <h3>Zone dangereuse</h3>
+              <button class="btn-danger" (click)="deleteGroup()">Supprimer le groupe</button>
+            </div>
+          }
+        </div>
+      }
     }
   </div>
 }

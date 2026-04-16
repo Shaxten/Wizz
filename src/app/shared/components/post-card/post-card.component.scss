@@ -1,8 +1,9 @@
 .post-card {
-  background: #16213e;
+  background: #161616;
   border-radius: 10px;
   padding: 1.25rem;
   margin-bottom: 1rem;
+  border: 1px solid #1e1e1e;
 }
 
 .post-header {
@@ -19,7 +20,7 @@
   color: #fff;
   text-decoration: none;
   font-weight: 600;
-  &:hover { color: #7c3aed; }
+  &:hover { color: #3ecf8e; }
 }
 
 .avatar {
@@ -33,27 +34,27 @@
   width: 32px;
   height: 32px;
   border-radius: 50%;
-  background: #7c3aed;
+  background: #3ecf8e;
   display: flex;
   align-items: center;
   justify-content: center;
-  color: #fff;
+  color: #000;
   font-weight: 700;
   font-size: 0.85rem;
 }
 
 .post-group {
-  color: #888;
+  color: #666;
   font-size: 0.85rem;
   a {
-    color: #7c3aed;
+    color: #3ecf8e;
     text-decoration: none;
     &:hover { text-decoration: underline; }
   }
 }
 
 .post-content {
-  color: #ddd;
+  color: #ccc;
   line-height: 1.5;
   white-space: pre-wrap;
 }
@@ -74,31 +75,30 @@
 }
 
 .post-date {
-  color: #666;
+  color: #555;
   font-size: 0.8rem;
 }
 
 .btn-comment {
   background: transparent;
-  border: 1px solid #333;
-  color: #aaa;
+  border: 1px solid #2a2a2a;
+  color: #888;
   padding: 0.3rem 0.75rem;
   border-radius: 6px;
   cursor: pointer;
   font-size: 0.8rem;
-  &:hover { border-color: #7c3aed; color: #7c3aed; }
+  &:hover { border-color: #3ecf8e; color: #3ecf8e; }
 }
 
-// Comments
 .comments-section {
   margin-top: 1rem;
   padding-top: 0.75rem;
-  border-top: 1px solid #1a2744;
+  border-top: 1px solid #1e1e1e;
 }
 
 .comment {
   padding: 0.5rem 0;
-  border-bottom: 1px solid #1a274433;
+  border-bottom: 1px solid #1e1e1e33;
 
   .comment-header {
     display: flex;
@@ -115,17 +115,17 @@
     text-decoration: none;
     font-size: 0.85rem;
     font-weight: 600;
-    &:hover { color: #7c3aed; }
+    &:hover { color: #3ecf8e; }
   }
 
   .comment-date {
-    color: #555;
+    color: #444;
     font-size: 0.75rem;
     margin-left: auto;
   }
 
   .comment-content {
-    color: #bbb;
+    color: #aaa;
     font-size: 0.9rem;
     margin-left: 2rem;
   }
@@ -142,11 +142,11 @@
   width: 22px;
   height: 22px;
   border-radius: 50%;
-  background: #7c3aed;
+  background: #3ecf8e;
   display: flex;
   align-items: center;
   justify-content: center;
-  color: #fff;
+  color: #000;
   font-weight: 700;
   font-size: 0.65rem;
 }
@@ -154,7 +154,7 @@
 .btn-delete-comment {
   background: transparent;
   border: none;
-  color: #666;
+  color: #555;
   cursor: pointer;
   font-size: 0.75rem;
   padding: 0 0.25rem;
@@ -170,24 +170,25 @@
     flex: 1;
     padding: 0.5rem 0.75rem;
     border-radius: 6px;
-    border: 1px solid #333;
-    background: #0f3460;
+    border: 1px solid #2a2a2a;
+    background: #111;
     color: #fff;
     font-size: 0.85rem;
-    &::placeholder { color: #666; }
+    &::placeholder { color: #555; }
   }
 
   button {
     padding: 0.5rem 1rem;
-    background: #7c3aed;
-    color: #fff;
+    background: #3ecf8e;
+    color: #000;
     border: none;
     border-radius: 6px;
     cursor: pointer;
     font-size: 0.85rem;
-    &:hover { background: #6d28d9; }
+    font-weight: 600;
+    &:hover { background: #35b87a; }
     &:disabled { opacity: 0.5; cursor: not-allowed; }
   }
 }
 
-.muted { color: #666; font-size: 0.85rem; }
+.muted { color: #555; font-size: 0.85rem; }
